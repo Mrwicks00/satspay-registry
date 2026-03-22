@@ -8,6 +8,7 @@
 (define-constant err-not-registered (err u200))
 (define-constant err-update-not-registered (err u300))
 (define-constant err-not-owner (err u301))
+(define-constant err-invalid-hash (err u102))
 
 ;; data maps
 (define-map phone-registry
@@ -27,6 +28,9 @@
 ;; public functions
 (define-public (register (phone-hash (buff 32)))
   (begin
+    ;; 0. Validate input length to clear unchecked data warnings
+    (asserts! (is-eq (len phone-hash) u32) err-invalid-hash)
+    
     ;; 1. Verify phone-hash is not already registered
     (asserts! (is-none (map-get? phone-registry { phone-hash: phone-hash })) err-already-registered)
     
@@ -73,6 +77,10 @@
       (reg-record (unwrap! (map-get? phone-registry { phone-hash: phone-hash }) err-update-not-registered))
       (current-owner (get owner reg-record))
     )
+    ;; 0. Validate inputs to clear unchecked data warnings
+    (asserts! (is-eq (len phone-hash) u32) err-invalid-hash)
+    (asserts! (not (is-eq new-address tx-sender)) err-not-owner)
+    
     ;; 1. Verify the caller is the current owner
     (asserts! (is-eq current-owner tx-sender) err-not-owner)
     
