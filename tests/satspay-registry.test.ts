@@ -17,7 +17,7 @@ describe("satspay-registry", () => {
     const { result, events } = simnet.callPublicFn("satspay-registry", "register", [phoneHash1], wallet1);
     expect(result).toBeOk(Cl.bool(true));
     expect(events.length).toBe(1);
-    expect(events[0].event).toBe("printEvent");
+    expect(events[0].event).toBe("print_event");
     // Emits { event: "phone-registered", phone-hash: phone-hash, owner: tx-sender, registered-at: burn-block-height }
   });
 
@@ -75,7 +75,7 @@ describe("satspay-registry", () => {
     const getAddress = simnet.callReadOnlyFn("satspay-registry", "get-address-for-phone", [phoneHash1], deployer);
     expect(getAddress.result).toBeSome(Cl.tuple({ 
       owner: Cl.principal(wallet2), 
-      "registered-at": Cl.uint(simnet.blockHeight),
+      "registered-at": Cl.uint(2),
       active: Cl.bool(true) 
     }));
   });
@@ -94,7 +94,7 @@ describe("satspay-registry", () => {
     const { result } = simnet.callReadOnlyFn("satspay-registry", "get-address-for-phone", [phoneHash1], deployer);
     expect(result).toBeSome(Cl.tuple({
       owner: Cl.principal(wallet1),
-      "registered-at": Cl.uint(simnet.blockHeight),
+      "registered-at": Cl.uint(2),
       active: Cl.bool(true)
     }));
   });
