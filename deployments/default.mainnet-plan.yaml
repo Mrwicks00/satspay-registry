@@ -11,7 +11,7 @@ plan:
         - contract-publish:
             contract-name: satspay-registry
             expected-sender: SP1GNDB8SXJ51GBMSVVXMWGTPRFHGSMWNNBEY25A4
-            cost: 15827206
+            cost: 39010
             path: contracts/satspay-registry.clar
             anchor-block-only: true
             clarity-version: 4
