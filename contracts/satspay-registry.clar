@@ -36,7 +36,7 @@
     ;; 3. Write to phone-registry
     (map-set phone-registry 
       { phone-hash: phone-hash } 
-      { owner: tx-sender, registered-at: block-height, active: true }
+      { owner: tx-sender, registered-at: burn-block-height, active: true }
     )
     
     ;; 4. Write to address-to-phone for reverse lookup
@@ -46,7 +46,7 @@
     )
     
     ;; 5. Emit event
-    (print { event: "phone-registered", phone-hash: phone-hash, owner: tx-sender, registered-at: block-height })
+    (print { event: "phone-registered", phone-hash: phone-hash, owner: tx-sender, registered-at: burn-block-height })
     
     (ok true)
   )
